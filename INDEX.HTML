@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>Quiz hub</title>
+      <style>
+         /* Basic styling for the navbar */
+         body {
+         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+         margin: 0;
+         padding: 0;
+         }
+         header {
+         background-color:#1B365C;
+         color: #fff;
+         padding: 10px 0;
+         text-align: center;
+         }
+         nav {
+         background-color:#A3D1FF;
+         text-align: center;
+         padding: 10px 0;
+         }
+         nav a {
+         color: #fff;
+         text-decoration: none;
+         padding: 10px 20px;
+         }
+         nav a:hover {
+         background-color: #d91313;
+         }
+         /* Style for the content */
+         .container {
+         width: 50%;
+         margin: 20px auto;
+         padding: 20px;
+         background-color: #fff;
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+         }
+         button {
+    background-color: #0f83e2;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+  }
+         
+      </style>
+   </head>
+   <body background="./1.jpg">
+      <header>
+         <h1 style="font-size: 100px;">
+           WELCOME   TO QUIZ HUB
+         </h1>
+      </header>
+
+      
+      <nav>
+         <a href="INDEX.HTML">LOGIN</a>
+         <a href="singup.html">SIGN UP</a>
+         <a href="admin.html">ADMIN</a>
+         
+
+         </nav>
+         
+         <div class="container" id="login" >
+          <h1>Login</h1>
+      <form id="loginForm">
+         <div>
+            <label for="username">Username:&nbsp;</label>
+            <input type="text" id="username" name="username" required>
+          </div>
+          <br>
+         <div>
+            <label for="password">Password: &nbsp;</label>
+            <input type="password" id="password" name="password" required>
+         </div>
+         <br>
+         <button type="submit" style="width:20%;">Login</button>
+      </form>
+      </div>
+      <script>
+         document.getElementById("loginForm").addEventListener("submit", function(event) {
+           event.preventDefault(); // Prevent the default form submission
+         
+           // Get the entered username and password
+           const username = document.getElementById("username").value;
+           const password = document.getElementById("password").value;
+         
+           // For simplicity, let's assume a hardcoded username and password
+           const validUsername = "rishi";
+           const validPassword = "123";
+         
+           // Check if the entered credentials match the hardcoded ones
+           if (username === validUsername && password === validPassword) {
+             // Redirect to the welcome page if the credentials are correct
+             window.location.href = "select.html";
+           } else {
+             alert("Invalid username or password. Please try again.");
+           }
+         });
+      </script>
+   </body>
+</html>
