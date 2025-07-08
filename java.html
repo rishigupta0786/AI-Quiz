@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>Quiz hub</title>
+      <style>
+         /* Basic styling for the navbar */
+         body {
+         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+         margin: 0;
+         padding: 0;
+         }
+         header {
+         background-color:#1B365C;
+         color: #fff;
+         padding: 10px 0;
+         text-align: center;
+         }
+         ol.r {list-style-type: none;}
+         nav {
+         background-color:#A3D1FF;
+         text-align: center;
+         padding: 10px 0;
+         }
+         nav a {
+         color: #fff;
+         text-decoration: none;
+         padding: 10px 20px;
+         }
+         nav a:hover {
+         background-color: #d91313;
+         }
+         /* Style for the content */
+         .container {
+         width: 50%;
+         margin: 20px auto;
+         padding: 20px;
+         background-color: #fff;
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+         }
+         button {
+    background-color: #0f83e2;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+  }
+         
+      </style>
+   </head>
+   <body>
+      <header>
+         <h1 style="font-size: 100px;">
+             TECH QUIZ 
+         </h1>
+      </header>
+
+      
+      <nav>
+         <a href="INDEX.HTML">LOGIN</a>
+         <a href="singup.html">SIGN UP</a>
+         <a href="admin.html">ADMIN</a>
+         </nav>
+ <div class="container">
+
+       
+  <h2>Quiz with API</h2>
+  <div id="quizContainer">
+    <p>Loading quiz...</p>
+  </div>
+
+  <button onclick="submitQuiz()">Submit</button>
+  <a href="certificate.html">
+
+    <button>Get Certificate</button>
+  </a>
+
+  <div id="result"></div>
+</div>  
+  <script>
+    async function fetchQuiz() {
+      const response = await fetch('https://opentdb.com/api.php?amount=10&category=18&type=multiple');
+      const data = await response.json();
+      displayQuiz(data.results);
+    }
+
+    function displayQuiz(questions) {
+      const quizContainer = document.getElementById('quizContainer');
+      quizContainer.innerHTML = '';
+
+      questions.forEach((question, index) => {
+        const questionElem = document.createElement('div');
+        questionElem.innerHTML = `
+          <p>${index + 1}. ${question.question}</p>
+          <ol class="r">
+            ${question.incorrect_answers.map(answer =>
+              `<li><input type="radio" name="question${index}" value="${answer}">${answer}</li>`
+            ).join('')}
+            <li><input type="radio" name="question${index}" value="${question.correct_answer}">${question.correct_answer}</li>
+          </ol>
+        `;
+        quizContainer.appendChild(questionElem);
+      });
+    }
+
+    function submitQuiz() {
+      const questions = document.querySelectorAll('#quizContainer div');
+      let correctCount = 0;
+      let wrongCount = 0;
+
+      questions.forEach((question, index) => {
+        const selectedOption = question.querySelector(`input[name=question${index}]:checked`);
+
+        if (selectedOption) {
+          const userAnswer = selectedOption.value;
+          if (userAnswer === question.textContent.trim()) {
+            correctCount++;
+          } else {
+            wrongCount++;
+          }
+        } else {
+          wrongCount++;
+        }
+      });
+
+      const resultContainer = document.getElementById('result');
+      resultContainer.innerHTML = `
+        <h3>Results:</h3>
+        <p>Correct Answers: ${correctCount}</p>
+        <p>Wrong Answers: ${wrongCount}</p>
+      `;
+    }
+
+    fetchQuiz(); // Load quiz when the page is loaded
+  </script>
+</body>
+</html>

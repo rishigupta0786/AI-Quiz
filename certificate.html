@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>Quiz hub</title>
+      <style>
+         /* Basic styling for the navbar */
+         body {
+         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+         margin: 0;
+         padding: 0;
+         }
+         header {
+         background-color:#1B365C;
+         color: #fff;
+         padding: 10px 0;
+         text-align: center;
+         }
+         nav {
+         background-color:#A3D1FF;
+         text-align: center;
+         padding: 10px 0;
+         }
+         nav a {
+         color: #fff;
+         text-decoration: none;
+         padding: 10px 20px;
+         }
+         nav a:hover {
+         background-color: #d91313;
+         }
+         /* Style for the content */
+         .container {
+         width: 50%;
+         margin: 20px auto;
+         padding: 20px;
+         background-color: #fff;
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+         }
+         button {
+    background-color: #0f83e2;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+  }
+         
+      </style>
+   </head>
+   <body background="./1.jpg">
+      <header>
+         <h1 style="font-size: 100px;">
+           WELCOME   TO QUIZ HUB
+         </h1>
+      </header>
+
+      
+      <nav>
+         <a href="INDEX.HTML">LOGIN</a>
+         <a href="singup.html">SIGN UP</a>
+         <a href="admin.html">ADMIN</a>
+         
+
+         </nav>
+         <div class="container">
+
+             <h1>Certificate Generator</h1>
+             
+             <div id="certificate-form">
+        <label for="recipient-name">Recipient's Name:</label>
+        <input type="text" id="recipient-name" required>
+
+        <label for="course-name">Course Name:</label>
+        <input type="text" id="course-name" required>
+<br>
+<br>
+<br>
+        <button type="button" onclick="generateCertificate()" style="width: 100%">Get Certificate</button>
+    </div>
+    <div class="container">
+
+        <div id="certificate">
+            <h2>Certificate of Completion</h2>
+            <p>This is to certify that</p>
+            <h3 id="certificate-recipient"></h3>
+            <p>has successfully completed the course</p>
+            <h3 id="certificate-course"></h3>
+            
+            <p>Issued on: <span id="issue-date"></span></p>
+            
+        </div>
+        <button>
+            <a style="color: white;" id="download-btn" download="certificate.png" onclick="downloadCertificate()">Download Certificate</a>
+</button>
+        
+    </div>
+</div>
+    
+    <script>
+        function generateCertificate() {
+            const recipientName = document.getElementById('recipient-name').value;
+            const courseName = document.getElementById('course-name').value;
+            
+            // Update certificate content
+            document.getElementById('certificate-recipient').textContent = recipientName;
+            document.getElementById('certificate-course').textContent = courseName;
+            document.getElementById('issue-date').textContent = new Date().toLocaleDateString();
+            
+            // Show the certificate div
+            document.getElementById('certificate').style.display = 'block';
+        }
+        
+        function downloadCertificate() {
+            // Get the certificate div as an HTML element
+            const certificateElement = document.getElementById('certificate');
+            
+            // Use html2canvas library to convert the certificate div to an image
+            html2canvas(certificateElement).then(canvas => {
+                // Convert the canvas to a data URL
+                const imageDataUrl = canvas.toDataURL('image/png');
+
+                // Create an anchor element with a download attribute
+                const downloadLink = document.createElement('a');
+                downloadLink.href = imageDataUrl;
+                downloadLink.download = 'certificate.png';
+
+                // Append the anchor element to the body and trigger a click event
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+
+                // Remove the anchor element from the body
+                document.body.removeChild(downloadLink);
+            });
+        }
+    </script>
+
+    <!-- Include the html2canvas library -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</body>
+</html>
